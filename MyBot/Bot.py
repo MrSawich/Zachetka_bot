@@ -133,8 +133,10 @@ def menu (call):
         file2 = open('img/etap4.png', 'rb')
         bot.send_photo(call.message.chat.id, file2, reply_markup=markup)
 
-#
+    bot.edit_message_reply_markup(call.message.chat.id, call.message.message_id)
+
 # git status
+# git add .
 # git commit -m "комит"
 # git push
 
