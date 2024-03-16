@@ -133,5 +133,5 @@ def menu (call):
         file2 = open('img/etap4.png', 'rb')
         bot.send_photo(call.message.chat.id, file2, reply_markup=markup)
 
-
+#вафыаыфафваврцваропцкркоерлц
 bot.polling(non_stop=True, interval= 0)
