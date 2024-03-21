@@ -7,7 +7,7 @@ bot = telebot.TeleBot('6512133921:AAFMaVgr14Qe8-YN6Bc9VXrIRKbcyYW2upM')
 
 def send_stats(call, markup):
     bot.send_message(call.message.chat.id,
-                     f"<b>Деньги:</b> <em>{actors[call.message.chat.id][1]}</em>, Энергия: {actors[call.message.chat.id][2]}, Баллы: {actors[call.message.chat.id][3]}",
+                     f"<b>Деньги:</b> <em>{actors[call.message.chat.id][1]}</em>, <b>Энергия:</b> <em>{actors[call.message.chat.id][2]}</em>, <b>Баллы:</b> <em>{actors[call.message.chat.id][3]}</em>",
                      reply_markup=markup,
                      parse_mode='html')
 
@@ -114,6 +114,7 @@ def menu (call):
         send_stats(call, markup)
 
     if call.data == "v6":
+        actors[call.message.chat.id][1] -= 300
         actors[call.message.chat.id][2] -= 1
         actors[call.message.chat.id][3] += 15
         markup = types.InlineKeyboardMarkup()
@@ -134,27 +135,70 @@ def menu (call):
         bot.send_photo(call.message.chat.id, img, reply_markup=markup)
 
     if call.data == "v7":
-        actors[call.message.chat.id][1] += 200
         actors[call.message.chat.id][2] -= 1
-        actors[call.message.chat.id][3] += 10
+        actors[call.message.chat.id][3] += 15
         markup = types.InlineKeyboardMarkup()
-        btn1 = types.InlineKeyboardButton(text='Далее', callback_data="game4")
+        btn1 = types.InlineKeyboardButton(text='Далее', callback_data="game5")
         markup.add(btn1)
         answer = open('text/answer7.txt', 'rb')
         bot.send_message(call.message.chat.id, answer)
         send_stats(call, markup)
 
     if call.data == "v8":
-        actors[call.message.chat.id][2] -= 1
-        actors[call.message.chat.id][3] += 15
+        actors[call.message.chat.id][1] -= 200
+        actors[call.message.chat.id][2] += 1
+        actors[call.message.chat.id][3] += 5
         markup = types.InlineKeyboardMarkup()
-        btn1 = types.InlineKeyboardButton(text='Далее', callback_data="game4")
+        btn1 = types.InlineKeyboardButton(text='Далее', callback_data="game5")
         markup.add(btn1)
         answer = open('text/answer8.txt', 'rb')
         bot.send_message(call.message.chat.id, answer)
         send_stats(call, markup)
 
+    if call.data == "game5":
+        markup = types.InlineKeyboardMarkup()
+        btn1 = types.InlineKeyboardButton(text='1. Честно пробегать весь семестр', callback_data="v9")
+        btn2 = types.InlineKeyboardButton(text='2. Подделать справки', callback_data="v10")
+        markup.add(btn1, btn2)
+        etap = open('text/5etap.txt', 'rb')
+        bot.send_message(call.message.chat.id, etap)
+        img = open('img/etap5.png', 'rb')
+        bot.send_photo(call.message.chat.id, img, reply_markup=markup)
 
+    if call.data == "v9":
+        actors[call.message.chat.id][2] -= 2
+        actors[call.message.chat.id][3] += 30
+        markup = types.InlineKeyboardMarkup()
+        btn1 = types.InlineKeyboardButton(text='Далее', callback_data="final")
+        markup.add(btn1)
+        answer = open('text/answer9.txt', 'rb')
+        bot.send_message(call.message.chat.id, answer)
+        send_stats(call, markup)
+
+    if call.data == "v10":
+        actors[call.message.chat.id][1] -= 400
+        actors[call.message.chat.id][2] += 1
+        actors[call.message.chat.id][3] -= 20
+        markup = types.InlineKeyboardMarkup()
+        btn1 = types.InlineKeyboardButton(text='Далее', callback_data="final")
+        markup.add(btn1)
+        answer = open('text/answer10.txt', 'rb')
+        bot.send_message(call.message.chat.id, answer)
+        send_stats(call, markup)
+
+    if call.data == "final":
+
+
+    if call.data == "holidays":
+        markup = types.InlineKeyboardMarkup()
+        btn1 = types.InlineKeyboardButton(text='Поработать на складе', callback_data="h1")
+        btn2 = types.InlineKeyboardButton(text='Тусить с друзьями', callback_data="h2")
+        btn3 = types.InlineKeyboardButton(text='Далее', callback_data="game6")
+        markup.add(btn1, btn2, btn3)
+        etap = open('text/holidays.txt', 'rb')
+        bot.send_message(call.message.chat.id, etap, reply_markup=markup)
+
+    if call.data == "h1":
 
     bot.edit_message_reply_markup(call.message.chat.id, call.message.message_id)
 

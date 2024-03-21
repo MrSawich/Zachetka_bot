@@ -33,3 +33,19 @@ def on_click(message):
         Так вышло, что вчера было посвящение и ты, мягко говоря, не в форме. Как поступишь?', reply_markup=markup)
         file = open('./etap1.png', 'rb')
         bot.send_photo(call.message.chat.id, file)
+
+
+                if call.data == "h1":
+            if actors[call.message.chat.id][2] > 0:
+                actors[call.message.chat.id][1] += 500
+                markup = types.InlineKeyboardMarkup()
+                btn1 = types.InlineKeyboardButton(text='Далее', callback_data="holidays")
+                markup.add(btn1)
+                send_stats(call, markup, reply_markup=markup)
+            elif actors[call.message.chat.id][2] <= 0:
+                markup = types.InlineKeyboardMarkup()
+                btn1 = types.InlineKeyboardButton(text='Далее', callback_data="holidays")
+                markup.add(btn1)
+                answer = open('text/h1_else.txt', 'rb')
+                bot.send_message(call.message.chat.id, answer, reply_markup=markup)
+                send_stats(call, markup)
